@@ -3,78 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Grade Management</title>
-
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
- 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
- 
-        input, button {
-            padding: 8px;
-            margin-top: 5px;
-        }
- 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-    </style>
- 
-    <script>
-        function validateForm() {
-            let name = document.getElementById("name").value;
-            let grade = document.getElementById("grade").value;
- 
-            if (name === "" || grade === "") {
-                alert("Please fill out all fields");
-                return false;
-            }
- 
-            if (grade < 0 || grade > 100) {
-                alert("Grade must be between 0 and 100");
-                return false;
-            }
- 
-            addStudent(name, grade);
-            return false; // prevent page reload
-        }
- 
-        function addStudent(name, grade) {
-            let status = grade >= 75 ? "Passed" : "Failed";
-            let color = grade >= 75 ? "green" : "red";
- 
-            let li = document.createElement("li");
-            li.style.color = color;
-            li.textContent = name + " - " + grade + " (" + status + ")";
- 
-            document.getElementById("studentList").appendChild(li);
- 
-            document.getElementById("name").value = "";
-            document.getElementById("grade").value = "";
-        }
-    </script>
+    <link rel="stylesheet" href="{{ url_for('static' , filename='style.css')}}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
- 
+
 <body>
- 
+
     <h2>Student Grade Management</h2>
- 
+
     <form onsubmit="return validateForm();">
-        <label>Student Name:</label><br>
-        <input type="text" id="name"><br><br>
- 
-        <label>Grade:</label><br>
-        <input type="number" id="grade"><br><br>
- 
-        <button type="submit">Add Student</button>
+        <!-- Name Field - Always visible -->
+        <div id="nameField">
+            <label>Student Name:</label><br>
+            <input type="text" id="name" oninput="checkFields()"><br><br>
+        </div>
+
+        <!-- Date Field - Hidden initially -->
+        <div id="dateField" class="hidden">
+            <label>Date:</label><br>
+            <input type="date" id="date" oninput="checkFields()"><br><br>
+        </div>
+
+        <!-- Subject Field - Hidden initially -->
+        <div id="subjectField" class="hidden">
+            <label>Subject:</label><br>
+            <select id="subject" onchange="checkFields()">
+                <option value="">-- Select Subject --</option>
+                <option value="Integrated Programming and Technologies">Integrated Programming and Technologies</option>
+                <option value="Introduction to Programming">Introduction to Programming</option>
+                <option value="Web Fundamentals">Web Fundamentals</option>
+            </select><br><br>
+        </div>
+
+        <!-- Email Field - Hidden initially -->
+        <div id="emailField" class="hidden">
+            <label>Email:</label><br>
+            <input type="email" id="email" oninput="checkFields()"><br><br>
+        </div>
+
+        <!-- Grade/Score Field - Hidden initially -->
+        <div id="gradeField" class="hidden">
+            <label>Grade:</label><br>
+            <input type="number" id="grade" oninput="checkFields()"><br><br>
+        </div>
+
+        <!-- Submit Button - Hidden initially -->
+        <div id="submitBtn" class="hidden">
+            <button type="submit">Add Student</button>
+        </div>
     </form>
- 
-    <hr>
- 
-    <h3>Student List</h3>
-    <ul id="studentList"></ul>
- 
+
+    
+
+    <div id="studentListSection" class="hidden">
+        <hr>
+        <h3>Student List</h3>
+        <ul id="studentList"></ul>
+    </div>
+
+
 </body>
+</html>
